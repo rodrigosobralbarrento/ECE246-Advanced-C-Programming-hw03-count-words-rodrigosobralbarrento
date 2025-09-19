@@ -32,11 +32,11 @@ int countWord(char* filename, char* word, char* line, int size)
     {
         // If the word appears in the line, increment ret
         // It is possible that the same word appears multiple times in the line
-        char * p = line;
-        while ((p = strstr(p, word)) != NULL)
+        char * current = line;
+        while ((current = strstr(current, word)) != NULL)
         {
             ret++;
-            p += strlen(word);
+            current += strlen(word);
         }
     }
 
