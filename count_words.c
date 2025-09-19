@@ -1,5 +1,6 @@
 // Modify this file
-
+#include <stdio.h>
+#include <string.h>
 #include "count_words.h"
 
 /*
@@ -15,12 +16,33 @@ Return:
 int countWord(char* filename, char* word, char* line, int size)
 {
     // Open a file whose name is filename for reading
-    // If fopen fails, return -1. 
+    FILE * file = fopen(filename, "r");
+
+    // If fopen fails, return -1.
+    if (file == NULL)
+    {
+        return -1;
+    }
+
     // Else, set ret to zero
-    
+    int ret = 0;
+
     // Use fgets to read the file in line-by-line
-    // If the word appears in the line, increment ret
-    // It is possible that the same word appears multiple times in the line
+    while (fgets(line, size, file) != NULL)
+    {
+        // If the word appears in the line, increment ret
+        // It is possible that the same word appears multiple times in the line
+        char * p = line;
+        while ((p = strstr(p, word)) != NULL)
+        {
+            ret++;
+            p += strlen(word);
+        }
+    }
+
+    fclose(file);
+
+    return ret;
 
     // EDGE CASES - READ CAREFULLY
     /* 1. If the word is split across multiple lines, DO NOT count the occurrence.
